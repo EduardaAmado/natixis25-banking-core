@@ -1,4 +1,12 @@
-# Dockerfile mínimo: apenas para demonstrar build & push
-FROM alpine:latest
-LABEL maintainer="mariaeduardaferreiraamado@gmail.com"
-CMD ["echo","Imagem do projeto natixis25-banking-core criada com sucesso"]
+FROM python:3.14
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
